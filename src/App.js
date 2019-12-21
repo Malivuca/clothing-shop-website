@@ -10,6 +10,8 @@ import shopPage from './pages/shop/shop.component.jsx';
 
 import Header from './components/header/header.component.jsx';
 
+import SignInAndSignUpPage from './pages/signIn-and-signUp/signIn-and-signUp.component.jsx';
+
 /*const HatsPage = () => (
   <div>
     <h1> Hats Page </h1>
@@ -23,7 +25,8 @@ function App() {
       <Header />
       <Switch>
         <Route exact={true} path='/' component={HomePage} />
-        <Route exact={true} path='/shop' component={shopPage} />
+        <Route path='/shop' component={shopPage} />
+        <Route path='/signin' component={SignInAndSignUpPage} />
       </Switch>
     </div>
   );
