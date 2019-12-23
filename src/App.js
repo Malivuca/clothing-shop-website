@@ -14,6 +14,8 @@ import SignInAndSignUpPage from './pages/signIn-and-signUp/signIn-and-signUp.com
 
 import { auth } from './firebase/firebase.utils.js';
 
+import { createUserProfileDocument } from './firebase/firebase.utils.js';
+
 /*const HatsPage = () => (
   <div>
     <h1> Hats Page </h1>
@@ -33,11 +35,25 @@ class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-      this.setState({ currentUser: user });
-
-      console.log(user);
-    })
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth);
+        
+        userRef.onSnapshot(snapShot => {
+          this.setState({
+            currentUser: {
+              id: snapShot.id,
+              ...snapShot.data()
+            }
+          });
+        })
+      }
+      else {
+        this.setState({
+          currentUser: null
+        });
+      }
+    });
   }
 
   componentWillUnmount() {
