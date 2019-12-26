@@ -27,13 +27,11 @@ class SignIn extends React.Component {
 		try {
 			await auth.signInWithEmailAndPassword(email, password);
 
-			window.location.href = "/";
+			this.setState({email: '', password: ''}, () => window.location.href = "/"); // Clears form-input field
 		}
 		catch(error) {
 			alert(error.message);
 		}
-		
-		this.setState({email: '', password: ''}); // Clears form-input field
 	}
 
 	handleChange = event => {
